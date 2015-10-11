@@ -1,0 +1,4 @@
+My idea consist of creating a small 'database' program which allows people to create their own username and password in 
+order to log in and be able to "publish" whatever they want so that other users can see it. Sort of like Facebook!
+
+I'd simply like to make a small database which saves peoples usernames and their respective passwords. This means that people who 'log in' would input their info and if it matches (username->password) then they would be directed to a page where they can input different things (text, media, etc) and publish it so that others may see it (XML).
