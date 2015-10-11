@@ -1,17 +1,54 @@
 <html>
   <head>
+    <link rel="stylesheet" type = "text/css" href= "Vmeste_css.css">
     <meta charset="utf-8"/>
-    <title>Vmeste/sign up</title>
+    <title>Vmeste</title>
   </head>
-  <body>
-      Welcome to Vmeste!! The worlds smallest social media... ^_^
-      <hr>
+  <body style="background-color: #D8E4E0">
+    <table>
+      <tr class="titles">
+        <td>
+          <span class="title">Vmeste</span>
+          <span class="title2">Welcome to Vmeste!! The worlds smallest social media... ^_^</span>
+        </td>
+      </tdr>
+      <tr>
+        <td class="signIn">
+          <input type="text" name="username" value="username"></input>
+          <input type="text" name="password" value="password"></input>
+          <input type="submit" value="Log in" style="background-color: #FF6600"></input>
+        </td>
+      </tdr>
+  </table>
+  <hr></hr>
   <form action="add_user" method="get">
-      <input type="text" name="username" value="username"></input>
-      <input type="text" name="password" value="password"></input>
-      <input type="text" name="password2" value="confirm password"></input>
-      <input type="submit" value="sign up"></input>
+    <table>
+      <tr>
+        <td>
+          <div>
+            <img src = "https://gumpylife.files.wordpress.com/2013/02/6cbca-gumpylifebinarypeople.jpg">
+          </div>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td class=signUp>Sign up</td>
+            </tr>
+            <tr>
+              <td><input type="text" name="username" value="username"></input></td>
+            </tr>
+            <tr>
+              <td><input type="text" name="password" value="password"></input></td>
+            </tr>
+            <tr>
+              <td><input type="text" name="password2" value="confirm password"></input></td>
+            </tr>
+            <tr>
+              <td><input type="submit" value="Sign up" style="background-color: #FF6600"></input></td>
+            </tr>
+          </table>
+        </td>
+    </table>
   </form>
-    <!--<script src = "server.js"></script> -->
   </body>
 </html>
