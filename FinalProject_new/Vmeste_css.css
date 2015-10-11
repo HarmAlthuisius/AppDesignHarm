@@ -28,3 +28,17 @@
   font-weight: bold;
   color: #FF9900;
 }
+.subTitleBar
+{
+  width: 1080px;
+  height: 40px;
+  background-color: #FF9900;
+}
+.publish
+{
+  background-color: #FF9900;
+}
+textarea
+{
+  resize: none;
+}
