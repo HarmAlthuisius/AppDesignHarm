@@ -36,22 +36,21 @@ function login(req, res)
     for(var i = 0; i < rows.length; i++)
     {
       if (rows[i].Username === usr && rows[i].Password === pwd)
-    if(count > 0)
       {
         count++;
       }
     }
 
+    if(count > 0)
     {
       try{
         res.writeHead(302, {'Location': 'homepage.html'});
         res.end();
-        return kvs['username'];
       }
       catch(exp){
         console.log('failed');
       }
-    }
+     }
 
     else{
       res.writeHead(200);
@@ -82,7 +81,8 @@ function addUser( req, res )
                   console.log( err );
                   res.writeHead( 200 );
                   res.end( "FAILED" );
-               }              }
+               }
+              }
             );
     }
     else
@@ -130,8 +130,8 @@ function server_fun( req, res )
         else if (req.url.indexOf( "enter?" ) >= 0)
         {
           reCreate(req, res);
-        else if (req.url.indexOf( "get_txt" ) >= 0)
         }
+        else if (req.url.indexOf( "get_txt" ) >= 0)
 
         {
           get_txt(req, res);
