@@ -15,6 +15,42 @@ function getFormValuesFromURL( url )
     return kvs
 }
 
+function login(req, res)
+{
+  var kvs = getFormValuesFromURL(req.url);
+  var db = new sql.Database('user_database.sqlite');
+  var usr = kvs['username'];
+  var pwd = kvs['password'];
+  db.all("SELECT * FROM Users", function(err, rows)
+   {
+    if(err!==null)
+    {
+      console.log(err);
+    }
+
+    for(var i = 0; i < rows.length; i++)
+    {
+      if (rows[i].Username === usr && rows[i].Password === pwd)
+      {
+         req.url = "homepage.html";
+         var filename = "./"+ req.url;
+
+         try{
+           var contents = fs.readFileSync(filename).toString();
+           res.writeHead(200);
+           res.end(contents);
+           goHomePage=true;
+         }
+
+         catch(exp){
+           console.log('failed');
+         }
+      }
+     }
+   }
+  )
+}
+
 function addUser( req, res )
 {
     var kvs = getFormValuesFromURL( req.url );
@@ -48,6 +84,8 @@ function addUser( req, res )
     }
 }
 
+
+
 function server_fun( req, res )
 {
     console.log( "The URL: '", req.url, "'" );
@@ -68,10 +106,15 @@ function server_fun( req, res )
         {
             addUser( req, res );
         }
+
+        else if (req.url.indexOf( "login_submit?" ) >= 0)
+        {
+            login( req, res);
+        }
         else
         {
             res.writeHead( 404 );
-            res.end( "Cannot find file: "+filename );
+            res.end( "Cannot find file: "+ req.url );
         }
     }
 }
