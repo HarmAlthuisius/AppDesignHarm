@@ -16,7 +16,7 @@ function enter()
     var text_in = document.getElementById('typing').value;
     var xhr = new XMLHttpRequest();
     xhr.addEventListener( "load", onResponse );
-    xhr.open( "get", "enter?txt_input="+text_in, true );
+    xhr.open( "get", "enter?identity=fake&txt_input="+text_in, true );
     xhr.send();
 }
 

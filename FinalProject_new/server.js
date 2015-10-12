@@ -2,6 +2,7 @@ var fs = require( 'fs' );
 var http = require( 'http' );
 var sql = require( 'sqlite3' ).verbose();
 var resp = "";
+var user = "anonymous";
 
 function getFormValuesFromURL( url )
 {
@@ -38,6 +39,7 @@ function login(req, res)
       if (rows[i].Username === usr && rows[i].Password === pwd)
       {
         count++;
+        user = rows[i].Username;
       }
     }
 
@@ -95,8 +97,18 @@ function addUser( req, res )
 function reCreate(req, res)
 {
   var kvs = getFormValuesFromURL(req.url);
+  kvs.identity=user;
+  if(kvs.identity === "anonymous")
+  {
+    var message = "";
+    resp = "";
+  }
+  else{
+    var message = kvs.identity + ": " + kvs.txt_input;
+    resp += decodeURI(message)+"<br>";
+  }
+
   res.writeHead(200);
-  resp += decodeURI(kvs.txt_input)+"<br>";
   res.end(resp);
 }
 
@@ -108,8 +120,6 @@ function get_txt(req, res)
 
 function server_fun( req, res )
 {
-    //console.log( "The URL: '", req.url, "'" );
-
     if( req.url === "/" || req.url === "/sign_in.htm" )
     {
         req.url = "/sign_in.html";
