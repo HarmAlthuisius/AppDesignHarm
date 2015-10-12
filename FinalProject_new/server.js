@@ -55,9 +55,8 @@ function login(req, res)
      }
 
     else{
-      alert("username and password don't match");
-      //res.writeHead(200);
-      //res.end('username and password not found, pls go back and sign up...');
+      res.writeHead(200);
+      res.end('username and password not found, pls go back and sign up...');
     }
    }
   )
@@ -121,8 +120,6 @@ function get_txt(req, res)
 
 function server_fun( req, res )
 {
-    //console.log( "The URL: '", req.url, "'" );
-
     if( req.url === "/" || req.url === "/sign_in.htm" )
     {
         req.url = "/sign_in.html";
