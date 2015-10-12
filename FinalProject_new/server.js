@@ -2,6 +2,7 @@ var fs = require( 'fs' );
 var http = require( 'http' );
 var sql = require( 'sqlite3' ).verbose();
 var resp = "";
+var user = "anonymous";
 
 function getFormValuesFromURL( url )
 {
@@ -38,6 +39,7 @@ function login(req, res)
       if (rows[i].Username === usr && rows[i].Password === pwd)
       {
         count++;
+        user = rows[i].Username;
       }
     }
 
@@ -53,8 +55,9 @@ function login(req, res)
      }
 
     else{
-      res.writeHead(200);
-      res.end('username and password not found, pls go back and sign up...');
+      alert("username and password don't match");
+      //res.writeHead(200);
+      //res.end('username and password not found, pls go back and sign up...');
     }
    }
   )
@@ -95,8 +98,18 @@ function addUser( req, res )
 function reCreate(req, res)
 {
   var kvs = getFormValuesFromURL(req.url);
+  kvs.identity=user;
+  if(kvs.identity === "anonymous")
+  {
+    var message = "";
+    resp = "";
+  }
+  else{
+    var message = kvs.identity + ": " + kvs.txt_input;
+    resp += decodeURI(message)+"<br>";
+  }
+
   res.writeHead(200);
-  resp += decodeURI(kvs.txt_input)+"<br>";
   res.end(resp);
 }
 
