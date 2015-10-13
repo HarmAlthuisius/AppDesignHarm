@@ -2,7 +2,6 @@ var fs = require( 'fs' );
 var http = require( 'http' );
 var sql = require( 'sqlite3' ).verbose();
 var resp = "";
-var session_id = '';
 
 function getFormValuesFromURL( url )
 {
@@ -24,7 +23,7 @@ function parseCookies( headers )
 {
     var cookies = {};
     var hc = headers.cookie;
-    console.log( 'cookies ', hc )
+    //console.log( 'cookies ', hc )
     hc && hc.split( ';' ).forEach(
         function( cookie )
         {
@@ -43,6 +42,7 @@ function login(req, res)
    var usr = kvs['username'];
    var pwd = kvs['password'];
    var count = 0;
+   var session_id = '';
    var cookies = parseCookies(req.headers);
 
    db.all("SELECT * FROM Users", function(err, rows)
@@ -125,8 +125,12 @@ function reCreate(req, res)
 {
   var kvs = getFormValuesFromURL(req.url);
   var emoji = kvs.mood;
+  console.log(req.headers.cookie);
+  var session_user = req.headers.cookie.split('=');
+  var user_id = session_user[1];
+  console.log(user_id);
   res.writeHead(200);
-  resp += session_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+  resp += user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
   if(emoji === "happy")
   {
     var img_src = "http://3.bp.blogspot.com/-ztHupiKrOGM/" +
@@ -167,6 +171,8 @@ function get_txt(req, res)
 
 function server_fun( req, res )
 {
+    //console.log( "The URL: '", req.url, "'" );
+
     if( req.url === "/" || req.url === "/sign_in.htm" )
     {
         req.url = "/sign_in.html";
@@ -181,7 +187,7 @@ function server_fun( req, res )
 
         else if (req.url.indexOf( "login_submit?" ) >= 0)
         {
-          login( req, res);
+			    login( req, res);
         }
 
         else if (req.url.indexOf( "enter?" ) >= 0)
