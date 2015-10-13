@@ -38,6 +38,11 @@
 {
   background-color: #FF9900;
 }
+.button
+{
+  background-color: #FF6600;
+  color: #FFFFFF
+}
 textarea
 {
   resize: none;
