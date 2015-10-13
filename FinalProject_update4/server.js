@@ -42,6 +42,7 @@ function login(req, res)
    var usr = kvs['username'];
    var pwd = kvs['password'];
    var count = 0;
+   var profile_pic = '';
    var session_id = '';
    var cookies = parseCookies(req.headers);
 
@@ -57,6 +58,7 @@ function login(req, res)
       if (rows[i].Username === usr && rows[i].Password === pwd)
       {
         count++;
+        profile_pic = rows[i].Profile;
       }
     }
 
@@ -68,7 +70,7 @@ function login(req, res)
       }
       else
       {
-         session_id = usr;
+         session_id = usr + "_" + profile_pic;
       }
       try{
         res.setHeader( "Set-Cookie",
@@ -94,10 +96,12 @@ function addUser( req, res )
    var kvs = getFormValuesFromURL( req.url );
    var db = new sql.Database( 'user_database.sqlite' );
    var username = kvs[ 'username' ];
+   var profile_pic = kvs['profile'];
    if( kvs[ 'password' ] === kvs[ 'password2' ])
    {
      var password = kvs[ 'password' ];
-     db.run( "INSERT INTO Users(Username, Password) VALUES ( ?, ? )", username, password,
+     db.run( "INSERT INTO Users(Username, Password, Profile) VALUES ( ?, ?, ? )", username, password,
+          profile_pic,
              function( err )
              {
                if( err === null )
@@ -109,7 +113,7 @@ function addUser( req, res )
                {
                   console.log( err );
                   res.writeHead( 200 );
-                  res.end( "FAILED" );
+                  res.end( "Choose a profile picture!" );
                }
               }
             );
@@ -127,36 +131,66 @@ function reCreate(req, res)
   var emoji = kvs.mood;
   console.log(req.headers.cookie);
   var session_user = req.headers.cookie.split('=');
-  var user_id = session_user[1];
+  var user_id = session_user[1].split('_')[0];
+  var profile = session_user[1].split('_')[1];
   console.log(user_id);
+
+  var gallery = {};
+  gallery['happy']   = "http://emojipop.net/data/images/emoji_set_0.png";
+  gallery['sad']     = "http://indiepopmarket.com/wp_ipm/wp-content/uploads/2015/01/0767.png";
+  gallery['angry']   = "https://www.emojibase.com/resources/img/emojis/apple/" +
+                       "x1f621.png.pagespeed.ic.WW_buT4c5P.png";
+  gallery['excited'] = "https://techologybarn.files.wordpress.com/2014/09/excited-emoji.png";
+  gallery['shocked'] = "http://www.shiftcomm.com/wp-content/uploads/2014/05/fearful-emoji.png";
+  gallery['default'] = "http://cdn.photoaffections.com/images/icon-profile.png";
+  gallery['minato']  = "http://static.comicvine.com/uploads/original/11119/111193741/4332958-2495712508-42940.jpg";
+  gallery['itachi']  = "http://static.comicvine.com/uploads/original/11124/111242221/4695565-7146195176-Itach.PNG";
+  gallery['gama']    = "http://a3.att.hudong.com/77/41/300260829801132841410036268_950.jpg";
   res.writeHead(200);
-  resp += user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+  if(profile === "default")
+  {
+    resp += "<img width='50' height='50' src = " + gallery['default'] +"><br>"
+            + user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+  }
+
+  if(profile === "gama")
+  {
+    resp += "<img width='50' height='50' src = " + gallery['gama'] +"><br>"
+            + user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+  }
+
+  if(profile === "itachi")
+  {
+    resp += "<img width='50' height='50' src = " + gallery['itachi'] +"><br>"
+            + user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+  }
+
+  if(profile === "minato")
+  {
+    resp += "<img width='50' height='50' src = " + gallery['minato'] +"><br>"
+            + user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+  }
+
+  //console.log(emoji);
   if(emoji === "happy")
   {
-    var img_src = "http://3.bp.blogspot.com/-ztHupiKrOGM/" +
-    "U67wwqnuFdI/AAAAAAAAEf4/4qLgNoqeCo8/s1600/COMEDY.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
+    resp += "<img width='100' height='100' src = " + gallery['happy'] + "><br><br>";
   }
   if(emoji === "sad")
   {
-    var img_src = "http://indiepopmarket.com/wp_ipm/wp-content/uploads/2015/01/0767.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
+    resp += "<img width='100' height='100' src = " + gallery['sad'] + "><br><br>";
   }
   if(emoji === "angry")
   {
-    var img_src = "https://www.emojibase.com/resources/img/emojis/apple/" +
-    "x1f621.png.pagespeed.ic.WW_buT4c5P.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
+    resp += "<img width='100' height='100' src = " + gallery['angry'] + "><br><br>";
   }
   if(emoji === "excited")
   {
-    var img_src = "https://techologybarn.files.wordpress.com/2014/09/excited-emoji.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
+    resp += "<img width='100' height='100' src = " + gallery['excited'] + "><br><br>";
   }
   if(emoji === "shocked")
   {
-    var img_src = "http://www.shiftcomm.com/wp-content/uploads/2014/05/fearful-emoji.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
+    resp += "<img width='100' height='100' src = " + gallery['shocked'] + "><br><br>";
   }
   if(emoji === "no_emoji")
   {}
