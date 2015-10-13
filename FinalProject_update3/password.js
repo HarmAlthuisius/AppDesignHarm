@@ -1,8 +1,6 @@
 var fs = require( 'fs' );
 var http = require( 'http' );
 var sql = require( 'sqlite3' ).verbose();
-var resp = "";
-var session_id = '';
 
 function getFormValuesFromURL( url )
 {
@@ -121,93 +119,30 @@ function addUser( req, res )
     }
 }
 
-function reCreate(req, res)
-{
-  var kvs = getFormValuesFromURL(req.url);
-  var emoji = kvs.mood;
-  res.writeHead(200);
-  resp += session_id + ": " + decodeURI(kvs.txt_input)+"<br>";
-  if(emoji === "happy")
-  {
-    var img_src = "http://3.bp.blogspot.com/-ztHupiKrOGM/" +
-    "U67wwqnuFdI/AAAAAAAAEf4/4qLgNoqeCo8/s1600/COMEDY.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
-  }
-  if(emoji === "sad")
-  {
-    var img_src = "http://indiepopmarket.com/wp_ipm/wp-content/uploads/2015/01/0767.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
-  }
-  if(emoji === "angry")
-  {
-    var img_src = "https://www.emojibase.com/resources/img/emojis/apple/" +
-    "x1f621.png.pagespeed.ic.WW_buT4c5P.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
-  }
-  if(emoji === "excited")
-  {
-    var img_src = "https://techologybarn.files.wordpress.com/2014/09/excited-emoji.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
-  }
-  if(emoji === "shocked")
-  {
-    var img_src = "http://www.shiftcomm.com/wp-content/uploads/2014/05/fearful-emoji.png";
-    resp += "<img width='100' height='100' src = " + img_src + "><br><br>";
-  }
-  if(emoji === "no_emoji")
-  {}
-  res.end(resp);
-}
-
-function get_txt(req, res)
-{
-   res.writeHead(200);
-   res.end(resp);
-}
-
 function server_fun( req, res )
 {
-    if( req.url === "/" || req.url === "/sign_in.htm" )
+    if( req.url === "/" || req.url === "/password.htm" )
     {
-        req.url = "/sign_in.html";
+        req.url = "/password.html";
     }
-
-    try
-    {
-        if( req.url.indexOf( "add_user?" ) >= 0 )
-        {
-          addUser( req, res );
-        }
-
-        else if (req.url.indexOf( "login_submit?" ) >= 0)
-        {
+  try
+  {
+      if (req.url.indexOf( "login_submit?" ) >= 0)
+      {
           login( req, res);
-        }
-
-        else if (req.url.indexOf( "enter?" ) >= 0)
-        {
-          reCreate(req, res);
-        }
-        else if (req.url.indexOf( "get_txt" ) >= 0)
-
-        {
-          get_txt(req, res);
-        }
-
-        else
-        {
+      }
+      else
+      {
 			    var filename = "./"+ req.url;
 			    var contents = fs.readFileSync(filename).toString();
 			    res.writeHead( 200 );
 			    res.end(contents);
-		    }
+	    }
     }
-
-    catch( exp ) {
-        res.writeHead( 404 );
-        res.end( "Cannot find file: "+ req.url );
-    }
+  catch( exp ) {
+      res.writeHead( 404 );
+      res.end( "Cannot find file: "+ req.url );
+      }
 }
-
-var server = http.createServer( server_fun );
-server.listen( 8080 );
+  var server = http.createServer( server_fun );
+  server.listen( 8080 );
