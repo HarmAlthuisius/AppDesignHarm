@@ -12,7 +12,7 @@
 }
 .titles
 {
-  width: 1080px;
+  width: 2000px;
   background-color: #FF6600;
 }
 .signIn
@@ -33,6 +33,10 @@
   width: 1080px;
   height: 40px;
   background-color: #FF9900;
+}
+.hidden
+{
+  width: 300px;
 }
 .publish
 {

@@ -224,6 +224,14 @@ function get_txt(req, res)
    res.end(resp);
 }
 
+function log_out(req, res)
+{
+  var session_id = '';
+  res.setHeader("Set-Cookie", ['session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC']);
+  res.writeHead(302, {'Location': 'sign_in.html'});
+  res.end();
+}
+
 function server_fun( req, res )
 {
     //console.log( "The URL: '", req.url, "'" );
@@ -266,6 +274,11 @@ function server_fun( req, res )
 
         {
           get_txt(req, res);
+        }
+
+        else if (req.url.indexOf("logOut?") >= 0)
+        {
+          log_out(req,res);
         }
 
         else
