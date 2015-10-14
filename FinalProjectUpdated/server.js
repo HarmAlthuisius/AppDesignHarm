@@ -73,8 +73,7 @@ function login(req, res)
          session_id = usr + "_" + profile_pic;
       }
       try{
-        res.setHeader( "Set-Cookie",
-                   [ 'session_id='+session_id ] );
+        res.setHeader("Set-Cookie", ['session_id='+session_id]);
         res.writeHead(302, {'Location': 'homepage.html'});
         res.end();
       }
@@ -95,10 +94,16 @@ function addUser( req, res )
 {
    var kvs = getFormValuesFromURL( req.url );
    var db = new sql.Database( 'user_database.sqlite' );
-   var username = kvs[ 'username' ];
+   var username = kvs['username'];
    var profile_pic = kvs['profile'];
+
+   var profile_pic_catch = '';
+   var session_id  = '';
+   var cookies = parseCookies(req.headers);
+
    if( kvs[ 'password' ] === kvs[ 'password2' ])
    {
+     profile_pic_catch = profile_pic;
      var password = kvs[ 'password' ];
      db.run( "INSERT INTO Users(Username, Password, Profile) VALUES ( ?, ?, ? )", username, password,
           profile_pic,
@@ -106,8 +111,22 @@ function addUser( req, res )
              {
                if( err === null )
                {
-                res.writeHead( 200 );
-                res.end( "New user has been created." );
+                 if( 'session_id' in cookies )
+                 {
+                    session_id = cookies.session_id;
+                 }
+                 else
+                 {
+                    session_id = username + "_" + profile_pic_catch;
+                 }
+                 try{
+                   res.setHeader("Set-Cookie", ['session_id='+session_id]);
+                   res.writeHead(302, {'Location': 'homepage.html'});
+                   res.end();
+                 }
+                 catch(exp){
+                   console.log('failed');
+                 }
                }
                else
                {
