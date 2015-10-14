@@ -157,12 +157,12 @@ function reCreate(req, res)
 
   var gallery = {};
   gallery['happy']   = "http://emojipop.net/data/images/emoji_set_0.png";
-  gallery['sad']     = "http://indiepopmarket.com/wp_ipm/wp-content/uploads/2015/01/0767.png";
+  gallery['sleepy']  = "https://www.emojibase.com/resources/img/emojis/apple/x1f634.png.pagespeed.ic.9TkqDnFPjV.png";
   gallery['angry']   = "https://www.emojibase.com/resources/img/emojis/apple/" +
                        "x1f621.png.pagespeed.ic.WW_buT4c5P.png";
-  gallery['excited'] = "https://techologybarn.files.wordpress.com/2014/09/excited-emoji.png";
-  gallery['shocked'] = "http://www.shiftcomm.com/wp-content/uploads/2014/05/fearful-emoji.png";
-  gallery['default'] = "http://cdn.photoaffections.com/images/icon-profile.png";
+  gallery['hushed']  = "https://www.emojibase.com/resources/img/emojis/apple/x1f62f.png.pagespeed.ic.M7FFkuBeGW.png";
+  gallery['kiss']    = "https://www.emojibase.com/resources/img/emojis/apple/1f617.png";
+  gallery['default'] = "https://www.emojibase.com/resources/img/emojis/apple/x1f194.png.pagespeed.ic.HDJFpYD4oo.png";
   gallery['minato']  = "http://static.comicvine.com/uploads/original/11119/111193741/4332958-2495712508-42940.jpg";
   gallery['itachi']  = "http://static.comicvine.com/uploads/original/11124/111242221/4695565-7146195176-Itach.PNG";
   gallery['gama']    = "http://a3.att.hudong.com/77/41/300260829801132841410036268_950.jpg";
@@ -197,21 +197,21 @@ function reCreate(req, res)
   {
     resp = "<img width='60' height='60' src = " + gallery['happy'] + "><br><br>" + resp;
   }
-  if(emoji === "sad")
+  if(emoji === "sleepy")
   {
-    resp = "<img width='60' height='60' src = " + gallery['sad'] + "><br><br>" + resp;
+    resp = "<img width='60' height='60' src = " + gallery['sleepy'] + "><br><br>" + resp;
   }
   if(emoji === "angry")
   {
     resp = "<img width='60' height='60' src = " + gallery['angry'] + "><br><br>" + resp;
   }
-  if(emoji === "excited")
+  if(emoji === "hushed")
   {
-    resp = "<img width='60' height='60' src = " + gallery['excited'] + "><br><br>" + resp;
+    resp = "<img width='60' height='60' src = " + gallery['hushed'] + "><br><br>" + resp;
   }
-  if(emoji === "shocked")
+  if(emoji === "kiss")
   {
-    resp = "<img width='60' height='60' src = " + gallery['shocked'] + "><br><br>" + resp;
+    resp = "<img width='60' height='60' src = " + gallery['kiss'] + "><br><br>" + resp;
   }
   if(emoji === "no_emoji")
   {}
