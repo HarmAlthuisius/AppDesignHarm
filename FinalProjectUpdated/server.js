@@ -233,6 +233,13 @@ function server_fun( req, res )
         req.url = "/sign_in.html";
     }
 
+    //console.log(req.headers.cookie);
+    if(!req.headers.cookie && req.url === '/homepage.html')
+    {
+      res.writeHead(302, {'Location': 'sign_in.html'});
+      res.end();
+    }
+
     try
     {
         if( req.url.indexOf( "add_user?" ) >= 0 )
