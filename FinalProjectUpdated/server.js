@@ -43,7 +43,7 @@ function login(req, res)
    var pwd = kvs['password'];
    var count = 0;
    var profile_pic = '';
-   var session_id = '';
+   var session_id  = '';
    var cookies = parseCookies(req.headers);
 
    db.all("SELECT * FROM Users", function(err, rows)
@@ -127,13 +127,14 @@ function addUser( req, res )
 
 function reCreate(req, res)
 {
+  //console.log(resp);
   var kvs = getFormValuesFromURL(req.url);
   var emoji = kvs.mood;
-  console.log(req.headers.cookie);
+  //console.log(req.headers.cookie);
   var session_user = req.headers.cookie.split('=');
   var user_id = session_user[1].split('_')[0];
   var profile = session_user[1].split('_')[1];
-  console.log(user_id);
+  //console.log(user_id);
 
   var gallery = {};
   gallery['happy']   = "http://emojipop.net/data/images/emoji_set_0.png";
@@ -147,50 +148,51 @@ function reCreate(req, res)
   gallery['itachi']  = "http://static.comicvine.com/uploads/original/11124/111242221/4695565-7146195176-Itach.PNG";
   gallery['gama']    = "http://a3.att.hudong.com/77/41/300260829801132841410036268_950.jpg";
   res.writeHead(200);
+
   if(profile === "default")
   {
-    resp += "<img width='50' height='50' src = " + gallery['default'] +"><br>"
-            + user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+    resp = "<img width='50' height='50' src = " + gallery['default'] +"><br>"
+            + user_id + ": " + decodeURI(kvs.txt_input)+"<br><br>" + resp;
   }
 
   if(profile === "gama")
   {
-    resp += "<img width='50' height='50' src = " + gallery['gama'] +"><br>"
-            + user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+    resp = "<img width='50' height='50' src = " + gallery['gama'] +"><br>"
+            + user_id + ": " + decodeURI(kvs.txt_input)+"<br><br>" + resp;
   }
 
   if(profile === "itachi")
   {
-    resp += "<img width='50' height='50' src = " + gallery['itachi'] +"><br>"
-            + user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+    resp = "<img width='50' height='50' src = " + gallery['itachi'] +"><br>"
+            + user_id + ": " + decodeURI(kvs.txt_input)+"<br><br>" + resp;
   }
 
   if(profile === "minato")
   {
-    resp += "<img width='50' height='50' src = " + gallery['minato'] +"><br>"
-            + user_id + ": " + decodeURI(kvs.txt_input)+"<br>";
+    resp = "<img width='50' height='50' src = " + gallery['minato'] +"><br>"
+            + user_id + ": " + decodeURI(kvs.txt_input)+"<br><br>" + resp;
   }
 
   //console.log(emoji);
   if(emoji === "happy")
   {
-    resp += "<img width='100' height='100' src = " + gallery['happy'] + "><br><br>";
+    resp = "<img width='60' height='60' src = " + gallery['happy'] + "><br><br>" + resp;
   }
   if(emoji === "sad")
   {
-    resp += "<img width='100' height='100' src = " + gallery['sad'] + "><br><br>";
+    resp = "<img width='60' height='60' src = " + gallery['sad'] + "><br><br>" + resp;
   }
   if(emoji === "angry")
   {
-    resp += "<img width='100' height='100' src = " + gallery['angry'] + "><br><br>";
+    resp = "<img width='60' height='60' src = " + gallery['angry'] + "><br><br>" + resp;
   }
   if(emoji === "excited")
   {
-    resp += "<img width='100' height='100' src = " + gallery['excited'] + "><br><br>";
+    resp = "<img width='60' height='60' src = " + gallery['excited'] + "><br><br>" + resp;
   }
   if(emoji === "shocked")
   {
-    resp += "<img width='100' height='100' src = " + gallery['shocked'] + "><br><br>";
+    resp = "<img width='60' height='60' src = " + gallery['shocked'] + "><br><br>" + resp;
   }
   if(emoji === "no_emoji")
   {}
