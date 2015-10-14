@@ -240,6 +240,12 @@ function server_fun( req, res )
       res.end();
     }
 
+    if(req.headers.cookie && req.url === '/sign_in.html')
+    {
+      res.writeHead(302, {'Location': 'homepage.html'});
+      res.end();
+    }
+
     try
     {
         if( req.url.indexOf( "add_user?" ) >= 0 )
